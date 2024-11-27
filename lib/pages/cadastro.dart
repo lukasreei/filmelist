@@ -1,9 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:filmelist/pages/cadastrobanco/controller.dart';
 import 'package:image_picker/image_picker.dart';
 
-class Cadastro extends StatelessWidget {
+
+class Cadastro extends StatefulWidget {
   const Cadastro({super.key});
+
+  @override
+  _CadastroState createState() => _CadastroState();
+}
+  class _CadastroState extends State<Cadastro>{
+  final Controller _controller = Controller();
+  String? erroMessage;
+
+  void _saveMovie() async {
+    final error = await _controller.saveMovie();
+
+    if (error != null) {
+      setState(() {
+        erroMessage = error;
+      });
+    } else {
+      setState(() {
+        erroMessage = null;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Filme cadastrado'))
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +45,7 @@ class Cadastro extends StatelessWidget {
           children: [
             SizedBox(height: 24,),
             TextField(
+              controller: _controller.movieController,
               style: const TextStyle(fontSize: 24),
               decoration: InputDecoration(
                 labelText: 'NAME THE MOVIE',
@@ -29,6 +57,7 @@ class Cadastro extends StatelessWidget {
             ),
             SizedBox(height: 24,),
             TextField(
+              controller: _controller.dataController,
               style: const TextStyle(fontSize: 24),
               keyboardType: TextInputType.datetime,
               inputFormatters: [
@@ -45,6 +74,7 @@ class Cadastro extends StatelessWidget {
             ),
             SizedBox(height: 20,),
             TextField(
+              controller: _controller.sinopseController,
               style: const TextStyle(fontSize: 24),
               decoration: InputDecoration(
                 labelText: 'SINOPSE',
@@ -54,6 +84,7 @@ class Cadastro extends StatelessWidget {
                 )
               ),
             ),
+            ElevatedButton(onPressed: _saveMovie, child: const Text('Cadastrar filme'),)
           ],
         ),
         )
