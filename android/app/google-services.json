@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "752703554088",
+    "project_id": "moviestream-167bb",
+    "storage_bucket": "moviestream-167bb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752703554088:android:43e807027c9bf10e1feb1d",
+        "android_client_info": {
+          "package_name": "com.example.filmelist"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCtAHpxr1BmV7ohBUahiG3jCgbQcRQ_nI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
