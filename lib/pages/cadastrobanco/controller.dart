@@ -1,25 +1,40 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 class Controller {
   final TextEditingController movieController = TextEditingController();
   final TextEditingController sinopseController = TextEditingController();
   final TextEditingController dataController = TextEditingController();
 
-  Future<String?> saveMovie() async {
+  Future<String?> saveMovie(File? imageFile) async {
     final movie = movieController.text;
-    final sinopse= sinopseController.text;
+    final sinopse = sinopseController.text;
     final data = dataController.text;
+
     if (movie.isEmpty || sinopse.isEmpty || data.isEmpty) {
-      return("preencha todos os campos.");
+      return "Preencha todos os campos.";
+    }
+
+    String? imageUrl;
+
+    if (imageFile != null) {
+      try {
+        final storageRef = FirebaseStorage.instance.ref().child('movies/${DateTime.now().toIso8601String()}.jpg');
+        final uploadTask = await storageRef.putFile(imageFile);
+        imageUrl = await uploadTask.ref.getDownloadURL();
+      } catch (e) {
+        return "Erro ao fazer upload da imagem: $e";
+      }
     }
 
     try {
       await FirebaseFirestore.instance.collection('movies').add({
-        'movie':movie,
-        'sinopse':sinopse,
-        'data':data,
+        'movie': movie,
+        'sinopse': sinopse,
+        'data': data,
+        'imageUrl': imageUrl,
       });
       movieController.clear();
       sinopseController.clear();
@@ -27,7 +42,7 @@ class Controller {
 
       return null;
     } catch (e) {
-      return "erro ao salvar filme: $e";
+      return "Erro ao salvar filme: $e";
     }
   }
 }
