@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:filmelist/pages/cadastrobanco/controller.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Cadastro extends StatefulWidget {
   const Cadastro({super.key});
@@ -84,6 +84,7 @@ class Cadastro extends StatefulWidget {
                 )
               ),
             ),
+            SizedBox(height: 20,),
             ElevatedButton(onPressed: _saveMovie, child: const Text('Cadastrar filme'),)
           ],
         ),
