@@ -41,7 +41,12 @@ android {
         }
     }
 }
-
+dependencies {
+    implementation 'com.google.firebase:firebase-storage:20.2.0'
+    implementation 'com.google.firebase:firebase-core:20.1.0' // Adicione também firebase-core se ainda não tiver
+    // outras dependências
+}
+apply plugin: 'com.google.gms.google-services'
 flutter {
     source = "../.."
 }
