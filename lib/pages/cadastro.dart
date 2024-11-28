@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'cadastrobanco/controller.dart';
 
 class Cadastro extends StatefulWidget {
@@ -16,6 +15,9 @@ class _CadastroState extends State<Cadastro> {
   final Controller _controller = Controller();
   String? erroMessage;
   File? _selectedImage;
+  String? _selectedGenre;
+
+  final List<String> _genres = ['ação', 'drama', 'comedia', 'romance', 'suspense', 'shounen'];
 
   Future<void> _pickImage() async {
     final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -27,7 +29,7 @@ class _CadastroState extends State<Cadastro> {
   }
 
   void _saveMovie() async {
-    final error = await _controller.saveMovie(_selectedImage);
+    final error = await _controller.saveMovie(_selectedImage, _selectedGenre);
 
     if (error != null) {
       setState(() {
@@ -91,6 +93,21 @@ class _CadastroState extends State<Cadastro> {
                 ),
               ),
               const SizedBox(height: 20),
+              DropdownButton<String>(
+                value: _selectedGenre,
+                hint: Text('Selecione o Gênero'),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedGenre = newValue;
+                  });
+                },
+                items: _genres.map<DropdownMenuItem<String>>((String genre) {
+                  return DropdownMenuItem<String>(
+                    value: genre,
+                    child: Text(genre),
+                  );
+                }).toList(),
+              ),
               GestureDetector(
                 onTap: _pickImage,
                 child: _selectedImage != null

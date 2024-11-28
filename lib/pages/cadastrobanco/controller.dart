@@ -8,12 +8,12 @@ class Controller {
   final TextEditingController sinopseController = TextEditingController();
   final TextEditingController dataController = TextEditingController();
 
-  Future<String?> saveMovie(File? imageFile) async {
+  Future<String?> saveMovie(File? imageFile, String? genre) async {
     final movie = movieController.text;
     final sinopse = sinopseController.text;
     final data = dataController.text;
 
-    if (movie.isEmpty || sinopse.isEmpty || data.isEmpty) {
+    if (movie.isEmpty || sinopse.isEmpty || data.isEmpty || genre == null) {
       return "Preencha todos os campos.";
     }
 
@@ -34,6 +34,7 @@ class Controller {
         'movie': movie,
         'sinopse': sinopse,
         'data': data,
+        'genre': genre,
         'imageUrl': imageUrl,
       });
       movieController.clear();
