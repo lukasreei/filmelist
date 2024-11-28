@@ -33,12 +33,16 @@ class New extends StatelessWidget {
             itemCount: movies.length,
             itemBuilder: (context, index) {
               final movie = movies[index];
-              final movieName = movie['movie'];
-              final movieDate = movie['data'];
-              final movieSinopse = movie['sinopse'];
+              final data = movie.data() as Map<String, dynamic>;
+
+              final movieName = data['movie'] ?? 'Sem nome';
+              final movieDate = data['data'] ?? 'Data desconhecida';
+              final movieSinopse = data['sinopse'] ?? 'Sem sinopse';
+              final imageUrl = data['imageUrl'] ?? null;
 
               return ListTile(
                 title: Text(movieName),
+                subtitle: Text(movieDate),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -47,6 +51,7 @@ class New extends StatelessWidget {
                         movieName: movieName,
                         movieDate: movieDate,
                         movieSinopse: movieSinopse,
+                        imageUrl: imageUrl,
                       ),
                     ),
                   );

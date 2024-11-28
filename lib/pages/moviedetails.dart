@@ -4,12 +4,14 @@ class MovieDetailsPage extends StatelessWidget {
   final String movieName;
   final String movieDate;
   final String movieSinopse;
+  final String? imageUrl;
 
   const MovieDetailsPage({
     super.key,
     required this.movieName,
     required this.movieDate,
     required this.movieSinopse,
+    this.imageUrl,
   });
 
   @override
@@ -24,6 +26,24 @@ class MovieDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if (imageUrl != null && imageUrl!.isNotEmpty)
+              Center(
+                child: Image.network(
+                  imageUrl!,
+                  height: 200,
+                  width: 200,
+                  fit: BoxFit.cover,
+                ),
+              )
+            else
+              Center(
+                child: Icon(
+                  Icons.image,
+                  size: 100,
+                  color: Colors.grey,
+                ),
+              ),
+            SizedBox(height: 20),
             Text('Nome: $movieName', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
             Text('Data de lançamento: $movieDate', style: TextStyle(fontSize: 18)),
