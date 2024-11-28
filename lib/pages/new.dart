@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:filmelist/pages/moviedetails.dart';
 
 class New extends StatelessWidget {
-
   const New({super.key});
 
   @override
@@ -10,6 +11,50 @@ class New extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.red,
         title: Text('NEW'),
+      ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('movies').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return Center(child: Text('Erro ao carregar filmes'));
+          }
+
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return Center(child: Text('Nenhum filme encontrado'));
+          }
+
+          final movies = snapshot.data!.docs;
+
+          return ListView.builder(
+            itemCount: movies.length,
+            itemBuilder: (context, index) {
+              final movie = movies[index];
+              final movieName = movie['movie'];
+              final movieDate = movie['data'];
+              final movieSinopse = movie['sinopse'];
+
+              return ListTile(
+                title: Text(movieName),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MovieDetailsPage(
+                        movieName: movieName,
+                        movieDate: movieDate,
+                        movieSinopse: movieSinopse,
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
       ),
     );
   }
