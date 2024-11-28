@@ -43,6 +43,12 @@ class New extends StatelessWidget {
               return ListTile(
                 title: Text(movieName),
                 subtitle: Text(movieDate),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete, color: Colors.red),
+                  onPressed: () {
+                    _showDeleteConfirmation(context, movie.id);
+                  },
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -52,6 +58,7 @@ class New extends StatelessWidget {
                         movieDate: movieDate,
                         movieSinopse: movieSinopse,
                         imageUrl: imageUrl,
+
                       ),
                     ),
                   );
@@ -60,6 +67,42 @@ class New extends StatelessWidget {
             },
           );
         },
+      ),
+    );
+  }
+
+  void _showDeleteConfirmation(BuildContext context, String movieId) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Confirmar exclusão'),
+        content: Text('Você tem certeza que deseja excluir este filme?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              FirebaseFirestore.instance
+                  .collection('movies')
+                  .doc(movieId)
+                  .delete()
+                  .then((_) {
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Filme excluído com sucesso')),
+                );
+              }).catchError((error) {
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Erro ao excluir filme: $error')),
+                );
+              });
+            },
+            child: Text('Excluir', style: TextStyle(color: Colors.red)),
+          ),
+        ],
       ),
     );
   }

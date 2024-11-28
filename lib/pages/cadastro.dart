@@ -93,6 +93,19 @@ class _CadastroState extends State<Cadastro> {
                 ),
               ),
               const SizedBox(height: 20),
+              TextField(
+                controller: _controller.ratingController,
+                style: const TextStyle(fontSize: 24),
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: InputDecoration(
+                  labelText: 'NOTA',
+                  hintText: 'EX: 10',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(24.0)),
+                ),
+              ),
               DropdownButton<String>(
                 value: _selectedGenre,
                 hint: Text('Selecione o Gênero'),

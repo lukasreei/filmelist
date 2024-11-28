@@ -30,7 +30,7 @@ class Home extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const Cadastro()),
                     );
                   },
-                  child: Text('SIGN UP'),
+                  child: Text('ADICIONAR'),
                 ),
                 SizedBox(width: 25),
                 ElevatedButton(
@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const New()),
                     );
                   },
-                  child: Text('NEW'),
+                  child: Text('LISTAR'),
                 ),
               ],
             ),
@@ -48,7 +48,7 @@ class Home extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: TextField(
-                controller: searchController, // Controlador do campo de pesquisa
+                controller: searchController,
                 style: const TextStyle(fontSize: 24),
                 decoration: InputDecoration(
                   labelText: 'SEARCH',
@@ -128,7 +128,7 @@ class Home extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('LAUNCH', style: TextStyle(fontSize: 20)),
+                Text('LANÇAMENTO', style: TextStyle(fontSize: 20)),
               ],
             ),
             SizedBox(height: 15),
