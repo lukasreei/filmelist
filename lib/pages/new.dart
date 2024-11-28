@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Search extends StatelessWidget {
-  final String query;
+class New extends StatelessWidget {
 
-  const Search({super.key, required this.query});
+  const New({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text('SEARCH'),
+        title: Text('NEW'),
       ),
     );
   }

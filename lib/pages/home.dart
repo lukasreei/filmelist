@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:filmelist/pages/cadastro.dart';
 import 'package:filmelist/pages/search.dart';
+import 'package:filmelist/pages/new.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -33,7 +34,12 @@ class Home extends StatelessWidget {
                 ),
                 SizedBox(width: 25),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const New()),
+                    );
+                  },
                   child: Text('NEW'),
                 ),
               ],
